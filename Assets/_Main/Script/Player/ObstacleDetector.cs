@@ -18,7 +18,6 @@ public class ObstacleDetector : MonoBehaviour {
 
         float detectLength = 0.3f;
         Ray ray = new Ray(transform.position, transform.forward);
-        Debug.DrawRay(transform.position, transform.forward * detectLength, Color.red);
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(ray, out hit, detectLength, 1 << 8))
         {

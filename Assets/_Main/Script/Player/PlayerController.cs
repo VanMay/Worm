@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
-        Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	void Update () {

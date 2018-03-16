@@ -15,9 +15,11 @@ public class HUDController : MonoBehaviour {
 	void Start () {
         playerController = player.GetComponent<PlayerController>();
         playerWeaponController = player.GetComponent<PlayerWeaponController>();
-	}
 
-	void Update () {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    void Update () {
         frontSight.gameObject.SetActive(playerController.isAiming);
         leftAmmo.gameObject.SetActive(playerController.isAiming);
 

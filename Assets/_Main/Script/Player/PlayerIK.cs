@@ -18,43 +18,46 @@ public class PlayerIK : MonoBehaviour {
 
     private Transform leftFoot;
     private Transform rightFoot;
-    private Animator Animator;
+    private Animator animator;
     private PlayerController playerController;
     private PlayerWeaponController playerWeaponController;
 
 	void Start () {
-        Animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
-        leftFoot = Animator.GetBoneTransform(HumanBodyBones.LeftFoot);
-        rightFoot = Animator.GetBoneTransform(HumanBodyBones.RightFoot);
+        leftFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
+        rightFoot = animator.GetBoneTransform(HumanBodyBones.RightFoot);
 	}
 
     void OnAnimatorIK()
     {
         FootIK();
         AimingIK();
-        ShootIK();
         LookAtIK();
     }
 
     void FootIK()
     {
-        Ray leftFootRay = new Ray(leftFoot.position + Vector3.up * 0.1f, Vector3.down);
-        Ray rightFootRay = new Ray(rightFoot.position + Vector3.up * 0.1f, Vector3.down);
+        Vector3 leftFootPos = animator.GetIKPosition(AvatarIKGoal.LeftFoot);
+        Vector3 rightFootPos = animator.GetIKPosition(AvatarIKGoal.RightFoot);
+        Quaternion leftFootRot = animator.GetIKRotation(AvatarIKGoal.LeftFoot);
+        Quaternion rightFootRot = animator.GetIKRotation(AvatarIKGoal.RightFoot);
+        Ray leftFootRay = new Ray(leftFootPos + Vector3.up * 0.1f, Vector3.down);
+        Ray rightFootRay = new Ray(rightFootPos + Vector3.up * 0.1f, Vector3.down);
         RaycastHit hit;
         if (Physics.Raycast(leftFootRay, out hit))
         {
-            float leftFootIKWeight = Animator.GetFloat("LeftFoot");
-            Vector3 leftFootPos = hit.point + Vector3.up * 0.1f;
-            Quaternion leftFootRot = Quaternion.FromToRotation(leftFoot.transform.up, hit.normal) * leftFoot.rotation;
+            float leftFootIKWeight = animator.GetFloat("LeftFoot");
+            leftFootPos = hit.point + Vector3.up * 0.1f;
+            leftFootRot = Quaternion.FromToRotation(leftFootRot * transform.up, hit.normal) * leftFootRot;
             SetIK(AvatarIKGoal.LeftFoot, leftFootIKWeight, leftFootPos, leftFootRot);
         }
         if (Physics.Raycast(rightFootRay, out hit))
         {
-            float rightFootIKWeight = Animator.GetFloat("RightFoot");
-            Vector3 rightFootPos = hit.point + Vector3.up * 0.1f;
-            Quaternion rightFootRot = Quaternion.FromToRotation(rightFoot.transform.up, hit.normal) * rightFoot.rotation;
+            float rightFootIKWeight = animator.GetFloat("RightFoot");
+            rightFootPos = hit.point + Vector3.up * 0.1f;
+            rightFootRot = Quaternion.FromToRotation(rightFootRot * transform.up, hit.normal) * rightFootRot;
             SetIK(AvatarIKGoal.RightFoot, rightFootIKWeight, rightFootPos, rightFootRot);
         }
     }
@@ -75,32 +78,26 @@ public class PlayerIK : MonoBehaviour {
             Quaternion righthandRot = rightHandPoint.rotation * Quaternion.Euler(0, 0, -90);
             SetIK(AvatarIKGoal.RightHand, rightHandIKWeight, righthandPos, righthandRot);
             //看向目标
-            Animator.SetLookAtWeight(lookAtIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
-            Animator.SetLookAtPosition(playerWeaponController.weapon.lookAtPoint.position);
+            animator.SetLookAtWeight(lookAtIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
+            animator.SetLookAtPosition(playerWeaponController.weapon.lookAtPoint.position);
         }
-    }
-
-    public void ShootIK()
-    {
-        Quaternion rot = Quaternion.Euler(Vector3.zero);
-        Animator.SetBoneLocalRotation(HumanBodyBones.LeftFoot, rot);
     }
 
     void LookAtIK()
     {
         if (lookAtTarget != null)
         {
-            Animator.SetLookAtWeight(lookAtIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
-            Animator.SetLookAtPosition(lookAtTarget.transform.position);
+            animator.SetLookAtWeight(lookAtIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
+            animator.SetLookAtPosition(lookAtTarget.transform.position);
         }
     }
 
     void SetIK(AvatarIKGoal goal, float ikWeight, Vector3 pos, Quaternion rot)
     {
-        Animator.SetIKPositionWeight(goal, ikWeight);
-        Animator.SetIKRotationWeight(goal, ikWeight);
+        animator.SetIKPositionWeight(goal, ikWeight);
+        animator.SetIKRotationWeight(goal, ikWeight);
 
-        Animator.SetIKPosition(goal, pos);
-        Animator.SetIKRotation(goal, rot);
+        animator.SetIKPosition(goal, pos);
+        animator.SetIKRotation(goal, rot);
     }
 }
