@@ -3794,7 +3794,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1234959577}
-  m_LocalRotation: {x: 0.1600828, y: 0.000000017282117, z: -0.0000000028026186, w: 0.9871036}
+  m_LocalRotation: {x: 0.16008282, y: 0.000000017282119, z: -0.0000000028026188, w: 0.98710364}
   m_LocalPosition: {x: -2.842171e-14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4698,7 +4698,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontSight: {fileID: 963910699}
   leftAmmo: {fileID: 9156295}
-  player: {fileID: 1636081127}
 --- !u!1 &1469032352 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100126, guid: 94e7c135471b0f3428bb091093da297f, type: 3}
@@ -5299,6 +5298,7 @@ GameObject:
   - component: {fileID: 1636081130}
   - component: {fileID: 1636081132}
   - component: {fileID: 1636081133}
+  - component: {fileID: 1636081135}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5428,6 +5428,17 @@ MonoBehaviour:
   Ammo: 100
   WeaponListIndex: 0
   WeaponIDList: 00000000010000000200000003000000
+--- !u!114 &1636081135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1636081127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f037796ee3e994d8b53c13d8d590ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649133416
 GameObject:
   m_ObjectHideFlags: 0
@@ -7337,7 +7348,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1880580332}
-  m_LocalRotation: {x: 0.12416862, y: 0.000000017372937, z: -0.0000000021742381, w: 0.9922612}
+  m_LocalRotation: {x: 0.12416851, y: 0.000000017372946, z: -0.0000000021742448, w: 0.9922612}
   m_LocalPosition: {x: -2.842171e-14, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

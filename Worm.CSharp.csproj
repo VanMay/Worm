@@ -286,6 +286,9 @@
     <Reference Include="BehaviorDesignerRuntime">
       <HintPath>Assets\Behavior Designer\Runtime\BehaviorDesignerRuntime.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Assets\UnityPackages\JsonNet\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Worm.CSharp.Plugins.csproj">
@@ -294,17 +297,33 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\_Main\Script\AI\AlertLevel.cs" />
+    <Compile Include="Assets\_Main\Script\AI\AuditoryDetector.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Action\CheckAround.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Action\FaceCheckTarget.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Action\LostCheckTarget.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Action\Patrol.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Conditional\CompareAlertState.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Conditional\CompareDistance.cs" />
+    <Compile Include="Assets\_Main\Script\AI\BTNode\Conditional\HaveAlertTarget.cs" />
+    <Compile Include="Assets\_Main\Script\AI\EnemyController.cs" />
+    <Compile Include="Assets\_Main\Script\AI\MessageDetector.cs" />
+    <Compile Include="Assets\_Main\Script\AI\VisionDetector.cs" />
     <Compile Include="Assets\_Main\Script\Player\ObstacleDetector.cs" />
+    <Compile Include="Assets\_Main\Script\Player\Player.cs" />
     <Compile Include="Assets\_Main\Script\Player\PlayerController.cs" />
     <Compile Include="Assets\_Main\Script\Player\PlayerIK.cs" />
     <Compile Include="Assets\_Main\Script\Player\PlayerInfo.cs" />
     <Compile Include="Assets\_Main\Script\Player\PlayerWeaponController.cs" />
+    <Compile Include="Assets\_Main\Script\Public\DataReader.cs" />
+    <Compile Include="Assets\_Main\Script\Public\Manager\BattleManager.cs" />
     <Compile Include="Assets\_Main\Script\Public\Manager\InputManager.cs" />
     <Compile Include="Assets\_Main\Script\Public\Manager\SaveManager.cs" />
     <Compile Include="Assets\_Main\Script\Public\Manager\SettingManager.cs" />
     <Compile Include="Assets\_Main\Script\Public\MathAdd.cs" />
     <Compile Include="Assets\_Main\Script\Public\ObjectsPool.cs" />
     <Compile Include="Assets\_Main\Script\Public\Tags.cs" />
+    <Compile Include="Assets\_Main\Script\UI\HUD\AlertLevelBarController.cs" />
     <Compile Include="Assets\_Main\Script\UI\HUD\FrontSight.cs" />
     <Compile Include="Assets\_Main\Script\UI\HUD\HUDController.cs" />
     <Compile Include="Assets\_Main\Script\UI\HUD\LeftAmmo.cs" />
@@ -1228,6 +1247,7 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
     <None Include="Assets\_Main\Material\Test\Test.shader" />
+    <None Include="Assets\_Main\Material\UI\HUD\AlertLevelBar.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -77,8 +77,8 @@ public class PlayerController : MonoBehaviour {
             }
             if (isCrouching)
             {
-                characterController.height = 1.4f;
-                characterController.center = Vector3.up * 0.7f;
+                characterController.height = 1.2f;
+                characterController.center = Vector3.up * 0.6f;
             }
             else
             {

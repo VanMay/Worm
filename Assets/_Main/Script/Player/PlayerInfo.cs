@@ -13,7 +13,7 @@ public class PlayerInfo : MonoBehaviour {
 
     void Start()
     {
-        Load();
+        //Load();
     }
 
     /// <summary>

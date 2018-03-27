@@ -8,11 +8,12 @@ public class HUDController : MonoBehaviour {
     [SerializeField]
     private LeftAmmo leftAmmo;
 
-    public GameObject player;
+    private GameObject player;
     private PlayerController playerController;
     private PlayerWeaponController playerWeaponController;
 
 	void Start () {
+        player = Player.instance.gameObject;
         playerController = player.GetComponent<PlayerController>();
         playerWeaponController = player.GetComponent<PlayerWeaponController>();
 

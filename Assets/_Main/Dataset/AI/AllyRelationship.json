@@ -1,0 +1,9 @@
+{
+	"Wanderer":["Wanderer", "Tracer", "Watcher","Executor"],
+  	"Tracer":["Wanderer", "Tracer", "Watcher", "Executor"],
+  	"Watcher":["Wanderer", "Tracer", "Watcher", "Executor"],
+  	"Executor":["Wanderer", "Tracer", "Watcher","Executor"],
+  	"Civilian":["Guard"],
+  	"Guard":["Player", "Civilian", "Guard", "Gangsta"],
+  	"Gangsta":["Gangsta"]
+}
