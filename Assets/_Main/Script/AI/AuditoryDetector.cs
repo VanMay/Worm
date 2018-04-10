@@ -17,6 +17,9 @@ public class AuditoryDetector : MonoBehaviour {
     {
         alertLevel.hasCheckTarget = true;
         alertLevel.checkPosition = sourcePos;
-        alertLevel.alertLevel += 0.5f;
+        if (alertLevel.alertLevel < 0.5f)
+        {
+            alertLevel.alertLevel += 0.5f;
+        }
     }
 }

@@ -34,6 +34,12 @@ public class BattleManager : MonoBehaviour {
         allyList = DataReader.JsonToObject<Dictionary<string, List<string>>>(allyFile.text);
     }
 
+    /// <summary>
+    /// 判断是否为敌方
+    /// </summary>
+    /// <param name="selfTag"></param>
+    /// <param name="targetTag"></param>
+    /// <returns></returns>
     public bool IsEnemy(string selfTag, string targetTag)
     {
         for (int i = 0; i < enemyList[selfTag].Count; i++)
@@ -46,6 +52,12 @@ public class BattleManager : MonoBehaviour {
         return false;
     }
 
+    /// <summary>
+    /// 判断是否为友方
+    /// </summary>
+    /// <param name="selfTag"></param>
+    /// <param name="targetTag"></param>
+    /// <returns></returns>
     public bool IsAlly(string selfTag, string targetTag)
     {
         for (int i = 0; i < allyList[selfTag].Count; i++)
@@ -56,5 +68,27 @@ public class BattleManager : MonoBehaviour {
             }
         }
         return false;
+    }
+
+
+
+    public void SendSound(Vector3 sourcePos, float sendSoundRange)
+    {
+        Collider[] objectsAround = Physics.OverlapSphere(transform.position, sendSoundRange);
+        foreach (Collider obj in objectsAround)
+        {
+            AlertLevel alertLevel = obj.GetComponent<AlertLevel>();
+            if (alertLevel)
+            {
+                if (BattleManager.instance.IsAlly(alertLevel.tag, obj.tag))
+                {
+                    AuditoryDetector auditoryDetector = obj.GetComponentInChildren<AuditoryDetector>();
+                    if (auditoryDetector)
+                    {
+                        auditoryDetector.GetAuditory(sourcePos);
+                    }
+                }
+            }
+        }
     }
 }

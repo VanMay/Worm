@@ -3,6 +3,7 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
 [TaskCategory("Main/AI")]
+[TaskDescription("Compare distance between self position and check position")]
 public class CompareDistance : Conditional
 {
     public enum Operation
