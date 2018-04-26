@@ -18,6 +18,14 @@ public class PlayerWeaponController : MonoBehaviour {
 
 	void Update () {
         SetWeapon(playerController.isAiming);
+        if (InputManager.instance.SwitchWeaponBtn > 0)
+        {
+            LastWeapon();
+        }
+        else if (InputManager.instance.SwitchWeaponBtn < 0)
+        {
+            NextWeapon();
+        }
 	}
 
     void SetWeapon(bool armed)
@@ -35,11 +43,15 @@ public class PlayerWeaponController : MonoBehaviour {
 
     void LastWeapon()
     {
+        SetWeapon(false);
         playerInfo.WeaponListIndex = (playerInfo.WeaponListIndex + 1) % playerInfo.WeaponIDList.Count;
+        SetWeapon(true);
     }
 
     void NextWeapon()
     {
+        SetWeapon(false);
         playerInfo.WeaponListIndex = (playerInfo.WeaponListIndex + playerInfo.WeaponIDList.Count - 1) % playerInfo.WeaponIDList.Count;
+        SetWeapon(true);
     }
 }

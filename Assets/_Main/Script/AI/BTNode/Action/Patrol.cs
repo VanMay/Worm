@@ -10,21 +10,21 @@ public class Patrol : Action
     /// <summary>
     /// x,y,z: 路径节点坐标， w: 路径节点停留时间
     /// </summary>
-    public List<Vector4> patrolRoute;
-    private int nextPositionIndex = 0;
     private Vector3 nextPosition;
     private float idleTime;
 
     private NavMeshAgent navMeshAgent;
     private BehaviorTree behaviorTree;
+    private PatrolInfo patrolInfo;
 
 	public override void OnStart()
 	{
         navMeshAgent = GetComponent<NavMeshAgent>();
         behaviorTree = GetComponent<BehaviorTree>();
+        patrolInfo = GetComponent<PatrolInfo>();
 
-        nextPosition = patrolRoute[nextPositionIndex];
-        idleTime = patrolRoute[nextPositionIndex].w;
+        nextPosition = patrolInfo.GetPatrolInfo();
+        idleTime = patrolInfo.GetPatrolInfo().w;
         navMeshAgent.SetDestination(nextPosition);
     }
 
@@ -32,9 +32,9 @@ public class Patrol : Action
 	{
         if (navMeshAgent.remainingDistance < 0.1f)
         {
-            nextPositionIndex = (nextPositionIndex + 1) % patrolRoute.Count;
-            nextPosition = patrolRoute[nextPositionIndex];
-            idleTime = patrolRoute[nextPositionIndex].w;
+            patrolInfo.Next();
+            nextPosition = patrolInfo.GetPatrolInfo();
+            idleTime = patrolInfo.GetPatrolInfo().w;
             navMeshAgent.SetDestination(nextPosition);
             if (idleTime != 0)
             {

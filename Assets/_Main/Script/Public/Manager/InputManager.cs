@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour {
     public bool AimingBtn;
     public bool ShootBtn;
     public bool ReloadBtn;
-    public float SwitchWeaponBtn;
+    public int SwitchWeaponBtn;
 
     [Header("UI Input")]
     public bool MenuBtn;
@@ -50,7 +50,18 @@ public class InputManager : MonoBehaviour {
                         ShootBtn = false;
                     }
                     ReloadBtn = Input.GetButtonDown("Key R");
-                    SwitchWeaponBtn = Input.GetAxis("Mouse ScrollWheel");
+                    if (Input.GetAxis("Mouse ScrollWheel") > 0)
+                    {
+                        SwitchWeaponBtn = 1;
+                    }
+                    else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+                    {
+                        SwitchWeaponBtn = -1;
+                    }
+                    else
+                    {
+                        SwitchWeaponBtn = 0;
+                    }
                     break;
                 }
             case InputDevice.XBoxJoystick:
@@ -68,7 +79,18 @@ public class InputManager : MonoBehaviour {
                         ShootBtn = false;
                     }
                     ReloadBtn = Input.GetButtonDown("Joystick RB");
-                    SwitchWeaponBtn = Input.GetAxis("Joystick Direction X");
+                    if (Input.GetAxis("Joystick Direction X") == 1)
+                    {
+                        SwitchWeaponBtn = 1;
+                    }
+                    else if (Input.GetAxis("Joystick Direction X") == -1)
+                    {
+                        SwitchWeaponBtn = -1;
+                    }
+                    else
+                    {
+                        SwitchWeaponBtn = 0;
+                    }
                     break;
                 }
             default:

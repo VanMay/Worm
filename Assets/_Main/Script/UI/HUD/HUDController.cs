@@ -6,7 +6,7 @@ public class HUDController : MonoBehaviour {
     [SerializeField]
     private FrontSight frontSight;
     [SerializeField]
-    private LeftAmmo leftAmmo;
+    private WeaponInfo weaponInfo;
 
     private GameObject player;
     private PlayerController playerController;
@@ -22,9 +22,9 @@ public class HUDController : MonoBehaviour {
 
     void Update () {
         frontSight.gameObject.SetActive(playerController.isAiming);
-        leftAmmo.gameObject.SetActive(playerController.isAiming);
+        weaponInfo.gameObject.SetActive(playerController.isAiming);
 
         frontSight.ShowBallisticDiffusion(playerWeaponController.weapon);
-        leftAmmo.ShowLeftAmmo(playerWeaponController.weapon.leftAmmo);
+        weaponInfo.ShowWeaponInfo(playerWeaponController.weapon);
     }
 }
