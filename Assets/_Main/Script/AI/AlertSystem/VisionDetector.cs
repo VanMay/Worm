@@ -61,7 +61,7 @@ public class VisionDetector : MonoBehaviour {
                 }
             }
         }
-        alertLevel.SetAlertTarget(null);
+        //alertLevel.SetAlertTarget(null);
         return false;
     }
 
@@ -88,13 +88,13 @@ public class VisionDetector : MonoBehaviour {
                 {
                     if (BattleManager.instance.IsEnemy(alertLevel.tag, hit.transform.tag))
                     {
-                        alertLevel.SetAlertTarget(hit.transform.gameObject);
+                        //alertLevel.SetAlertTarget(hit.transform.gameObject);
                         return true;
                     }
                 }
             }
         }
-        alertLevel.SetAlertTarget(null);
+        //alertLevel.SetAlertTarget(null);
         return false;
     }
 

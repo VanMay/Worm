@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour {
     private Animator animator;
     private PlayerWeaponController playerWeaponController;
     public ObstacleDetector detector;
+    private PlayerIK playerIK;
 
     private AnimatorStateInfo animInfo;
 
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
+        playerIK = GetComponent<PlayerIK>();
 	}
 
 	void Update () {
@@ -219,6 +221,7 @@ public class PlayerController : MonoBehaviour {
                 if (InputManager.instance.ClimbBtn)
                 {
                     animator.SetTrigger("ClimbHigh");
+                    playerIK.InitCLimbMarchTarget(gameObject, detector.PlatformHigh, detector.hitNormal);
                 }
             }
             else if (detector.Roadblock)

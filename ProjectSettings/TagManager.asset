@@ -15,6 +15,7 @@ TagManager:
   - Civilian
   - Guard
   - Gangsta
+  - Attack
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Interaction
   - Character
   - AI
-  - 
+  - HitArea
   - 
   - 
   - 

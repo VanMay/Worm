@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Walker : MonoBehaviour {
     public WalkerGenerator walkerGenerator;
@@ -8,6 +9,7 @@ public class Walker : MonoBehaviour {
     private WalkPoint lastWalkPoint;
 
     private Animator anim;
+    private NavMeshAgent agent;
 
 	void Start () {
         Init();
@@ -19,11 +21,12 @@ public class Walker : MonoBehaviour {
         //随机动画初始状态
         anim = GetComponent<Animator>();
         anim.SetFloat("AnimCycleOffset", Random.value);
+        agent = GetComponent<NavMeshAgent>();
     }
 
 	void Update () {
-        float speed = Mathf.Max(GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude, 1f);
-        anim.SetFloat("MoveSpeed", speed);
+        float speed = Mathf.Clamp01(agent.velocity.magnitude / agent.speed);
+        anim.SetFloat("Speed", speed);
     }
 
     /// <summary>

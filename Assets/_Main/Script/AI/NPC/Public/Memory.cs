@@ -115,4 +115,12 @@ public class Memory<T> {
             }
         }
     }
+
+    /// <summary>
+    /// 遗忘所有记忆
+    /// </summary>
+    public void ForgetAll()
+    {
+        memoryQueue.Clear();
+    }
 }

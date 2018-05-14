@@ -54,10 +54,10 @@ public class Bullet : MonoBehaviour {
             }
             Ray ray = new Ray(transform.position, velocity);
             RaycastHit hit = new RaycastHit();
-            if (Physics.Raycast(ray, out hit, deltaDistance))
+            if (Physics.Raycast(ray, out hit, deltaDistance, LayerMask.GetMask(Layers.Default, Layers.HitArea)))
             {
                 transform.position = hit.point;
-                StartCoroutine(Hit(hit.transform));
+                StartCoroutine(Hit(hit.transform, currentDamage));
                 break;
             }
             else
@@ -75,8 +75,25 @@ public class Bullet : MonoBehaviour {
         yield return null;
     }
 
-    IEnumerator Hit(Transform hitTarget)
+    IEnumerator Hit(Transform hitTarget, float damage)
     {
+        if(hitTarget.gameObject.layer == LayerMask.NameToLayer(Layers.Default))
+        {
+            yield return new WaitForSeconds(5);
+        }
+        else
+        {
+            Debug.Log("Hit: " + hitTarget.name);
+            if(hitTarget.name == "HeadArea")
+            {//爆头两倍伤害
+                hitTarget.GetComponent<HitArea>().self.GetDamage(damage * 2);
+            }
+            else
+            {
+                hitTarget.GetComponent<HitArea>().self.GetDamage(damage);
+            }
+        }
+        bulletsPool.Return(gameObject);
         yield return null;
     }
 }

@@ -16,8 +16,13 @@ public class PlayerIK : MonoBehaviour {
     [SerializeField]
     private float clampIKWeight = 1;
 
-    private Transform leftFoot;
-    private Transform rightFoot;
+    private Vector3 marchPos;
+    private Quaternion marchRot;
+    private Vector3 leftHandMarchPos;
+    private Quaternion leftHandMarchRot;
+    private Vector3 rightHandMarchPos;
+    private Quaternion rightHandMarchRot;
+
     private Animator animator;
     private PlayerController playerController;
     private PlayerWeaponController playerWeaponController;
@@ -26,17 +31,22 @@ public class PlayerIK : MonoBehaviour {
         animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
         playerWeaponController = GetComponent<PlayerWeaponController>();
-        leftFoot = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
-        rightFoot = animator.GetBoneTransform(HumanBodyBones.RightFoot);
 	}
+
+    void Update()
+    {
+        ClimbMarchTarget();
+    }
 
     void OnAnimatorIK()
     {
         FootIK();
         AimingIK();
         LookAtIK();
+        ClimbIK();
     }
 
+    //Foot与地面高度和角度匹配
     void FootIK()
     {
         Vector3 leftFootPos = animator.GetIKPosition(AvatarIKGoal.LeftFoot);
@@ -62,7 +72,8 @@ public class PlayerIK : MonoBehaviour {
         }
     }
 
-    public void AimingIK()
+    //瞄准时使手部、身体和头部与武器匹配
+    void AimingIK()
     {
         if (playerController.isAiming)
         {
@@ -83,12 +94,54 @@ public class PlayerIK : MonoBehaviour {
         }
     }
 
+    //看向指定物体
     void LookAtIK()
     {
         if (lookAtTarget != null)
         {
             animator.SetLookAtWeight(lookAtIKWeight, bodyIKWeight, headIKWeight, eyesIKWeight, clampIKWeight);
             animator.SetLookAtPosition(lookAtTarget.transform.position);
+        }
+    }
+
+    public void InitCLimbMarchTarget(GameObject player, GameObject platformInteractionBox, Vector3 hitNormal)
+    {
+        Collider platformCollider = platformInteractionBox.GetComponent<Collider>();
+        Vector3 closestPoint = platformCollider.ClosestPoint(player.transform.position);
+        float height = platformCollider.bounds.size.y;
+        Vector3 right = Vector3.Cross(hitNormal, Vector3.up).normalized;
+        Vector3 forward = Vector3.Cross(right, Vector3.up).normalized;
+        marchPos = closestPoint - forward * 0.5f;
+        marchRot = Quaternion.LookRotation(forward);
+
+        leftHandMarchPos = platformCollider.ClosestPoint(closestPoint + Vector3.up * height - right * 0.25f);
+        leftHandMarchRot = Quaternion.Euler(Vector3.zero);
+
+        rightHandMarchPos = platformCollider.ClosestPoint(closestPoint + Vector3.up * height + right * 0.25f);
+        rightHandMarchRot = Quaternion.Euler(Vector3.zero);
+    }
+
+    //攀爬时与墙面匹配
+    void ClimbMarchTarget()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Climb_2m"))
+        {
+            MatchTargetWeightMask weightMask = new MatchTargetWeightMask(Vector3.one, 0);
+            float startTime = 0;
+            float endTime = 0.1f;
+            animator.MatchTarget(marchPos, marchRot, AvatarTarget.Root, weightMask, startTime, endTime);
+
+            Debug.DrawRay(leftHandMarchPos, Vector3.up * 10, Color.red);
+            Debug.DrawRay(rightHandMarchPos, Vector3.up * 10, Color.red);
+        }
+    }
+
+    void ClimbIK()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Climb_2m"))
+        {
+            SetIK(AvatarIKGoal.LeftHand, animator.GetFloat("LeftHand"), leftHandMarchPos, leftHandMarchRot);
+            SetIK(AvatarIKGoal.RightHand, animator.GetFloat("RightHand"), rightHandMarchPos, rightHandMarchRot);
         }
     }
 

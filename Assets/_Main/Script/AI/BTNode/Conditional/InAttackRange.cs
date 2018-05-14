@@ -1,6 +1,7 @@
 using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using UnityEngine.AI;
 
 [TaskCategory("Main/AI")]
 public class InAttackRange : Conditional
@@ -9,10 +10,14 @@ public class InAttackRange : Conditional
     public float attackRange = 1;
 
     private AlertLevel alertLevel;
+    private NavMeshAgent agent;
+    private NavMeshObstacle obstacle;
 
     public override void OnStart()
     {
         alertLevel = GetComponent<AlertLevel>();
+        agent = GetComponent<NavMeshAgent>();
+        obstacle = GetComponent<NavMeshObstacle>();
     }
 
     public override TaskStatus OnUpdate()
@@ -30,7 +35,6 @@ public class InAttackRange : Conditional
                 }
             }
         }
-       
 		return TaskStatus.Failure;
 	}
 }

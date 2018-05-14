@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using BehaviorDesigner.Runtime;
+using UnityEngine.AI;
 
 public class Worker : MonoBehaviour {
     [Header("State")]
@@ -14,17 +15,19 @@ public class Worker : MonoBehaviour {
 
     private Animator anim;
     private BehaviorTree behaviorTree;
+    private NavMeshAgent agent;
 
     void Start () {
         GetWork();
         anim = GetComponent<Animator>();
         anim.SetFloat("AnimCycleOffset", Random.value);
         behaviorTree = GetComponent<BehaviorTree>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
 	void Update () {
-        float speed = Mathf.Max(GetComponent<UnityEngine.AI.NavMeshAgent>().velocity.magnitude, 1f);
-        anim.SetFloat("MoveSpeed", speed);
+        float speed = Mathf.Clamp01(agent.velocity.magnitude / agent.speed);
+        anim.SetFloat("Speed", speed);
         SendValueToBehaviorTree();
     }
 
@@ -57,5 +60,22 @@ public class Worker : MonoBehaviour {
     void SendValueToBehaviorTree()
     {
         behaviorTree.SetVariableValue("WorkLocation", workLocation);
+    }
+
+    public void OnDrawGizmosSelected()
+    {
+#if UNITY_EDITOR
+        Gizmos.color = Color.red;
+        for (int i = 0; i < WorkFlow.Count; i++)
+        {
+            Gizmos.DrawWireSphere(WorkFlow[i].transform.position, 0.25f);
+            NavMeshPath path = new NavMeshPath();
+            NavMesh.CalculatePath(WorkFlow[i].transform.position, WorkFlow[(i + 1) % WorkFlow.Count].transform.position, NavMesh.AllAreas, path);
+            for (int j = 0; j < path.corners.Length - 1; j++)
+            {
+                Gizmos.DrawLine(path.corners[j], path.corners[(j + 1)]);
+            }
+        }
+#endif
     }
 }

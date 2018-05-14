@@ -32,7 +32,7 @@ public class AlertLevelBarController : MonoBehaviour {
 
         for (int i = 0; i < barList.Count; i++)
         {
-            Vector3 enemyDir = BattleManager.instance.playerEnemyList[i].transform.position - Player.instance.transform.position;
+            Vector3 enemyDir = BattleManager.instance.playerEnemyList[i].transform.position - PublicGameObjectManager.instance.Player.transform.position;
             Vector3 enemyDirOnXZ = Vector3.ProjectOnPlane(enemyDir, Vector3.up).normalized;
             Vector3 viewDir = Vector3.ProjectOnPlane(Camera.main.transform.forward, Vector3.up).normalized;
             Vector3 localEnemyDirOnXZ = Quaternion.FromToRotation(viewDir, Vector3.forward) * enemyDirOnXZ;

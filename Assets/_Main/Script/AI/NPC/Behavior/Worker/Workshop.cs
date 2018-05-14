@@ -70,7 +70,7 @@ public class Workshop : MonoBehaviour {
     public void OnDrawGizmos()
     {
 #if UNITY_EDITOR
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.red;
         for (int i = 0; i < workLocationList.Length; i++)
         {
             Gizmos.DrawWireSphere(workLocationList[i].transform.position, 0.25f);

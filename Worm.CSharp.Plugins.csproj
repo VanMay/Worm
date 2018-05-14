@@ -235,6 +235,9 @@
     <Reference Include="BehaviorDesignerRuntime">
       <HintPath>Assets\Behavior Designer\Runtime\BehaviorDesignerRuntime.dll</HintPath>
     </Reference>
+    <Reference Include="UnityFbxPrefab">
+      <HintPath>Assets\FbxExporters\UnityFbxPrefab.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Assets\UnityPackages\JsonNet\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -463,6 +466,11 @@
     <None Include="Assets\Cinemachine\ReleaseNotes.txt" />
     <None Include="Assets\Easy Save 2\changelog.txt" />
     <None Include="Assets\Easy Save 2\readme.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\Editor\FbxSdk\README.txt" />
+    <None Include="Assets\FbxExporters\LICENSE.txt" />
+    <None Include="Assets\FbxExporters\README.txt" />
+    <None Include="Assets\FbxExporters\RELEASE_NOTES.txt" />
     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ClassTypeTemplate.txt" />
     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3ComponentTypeTemplate.txt" />
     <None Include="Assets\Plugins\Easy Save 3\Editor\ES3TypeTemplate.txt" />
@@ -510,9 +518,13 @@
     <None Include="Assets\PostProcessing\Resources\Shaders\Uber.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\UberSecondPass.cginc" />
     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
-    <None Include="Assets\_Main\Material\Test\Test.shader" />
     <None Include="Assets\_Main\Material\UI\HUD\AlertLevelBar.shader" />
-    <None Include="Assets\_Main\Shader\Cloth.shader" />
+    <None Include="Assets\_Main\Shader\Item\Elevator\ElevatorPillarLight.shader" />
+    <None Include="Assets\_Main\Shader\Public\Displacement.shader" />
+    <None Include="Assets\_Main\Shader\Public\Dissolve.shader" />
+    <None Include="Assets\_Main\Shader\Public\Glass.shader" />
+    <None Include="Assets\_Main\Shader\Public\MyLib.cginc" />
+    <None Include="Assets\_Main\Shader\Public\WetSurf.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

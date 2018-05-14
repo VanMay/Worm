@@ -11,4 +11,5 @@ public class Layers {
     public static string Interaction = "Interaction";
     public static string Character = "Character";
     public static string AI = "AI";
+    public static string HitArea = "HitArea";
 }

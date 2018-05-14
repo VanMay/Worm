@@ -15,4 +15,5 @@ public class Tags {
     public static string Civilian = "Civilian";
     public static string Guard = "Guard";
     public static string Gangsta = "Gangsta";
+    public static string Attack = "Attack";
 }

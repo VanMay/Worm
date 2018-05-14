@@ -30,17 +30,17 @@ public class AlertLevel : MonoBehaviour {
     public bool hasCheckTarget = false;
     public Vector3 checkPosition;
 
-    public VisionDetector visionDetector;
-    public MessageDetector messageDetector;
+    public Vision vision;
 
     private BehaviorTree behaviorTree;
 
 	void Start () {
-        visionDetector.alertLevel = this;
+        vision.self = gameObject;
         behaviorTree = GetComponent<BehaviorTree>();
 	}
 
 	void Update () {
+        UpdateDetect();
         UpdateAlertLevel();
         UpdateState();
         SendValueToBT();
@@ -50,7 +50,7 @@ public class AlertLevel : MonoBehaviour {
     {
         if (alertTarget)
         {
-            float distance = (alertTarget.transform.position - transform.position).magnitude / visionDetector.detectRange;
+            float distance = (alertTarget.transform.position - transform.position).magnitude / vision.visionRange;
             float increaseSpeed = increaseSpeedCurve.Evaluate(distance);
             alertLevel += increaseSpeed * Time.deltaTime;
             hasCheckTarget = true;
@@ -87,9 +87,25 @@ public class AlertLevel : MonoBehaviour {
         else
         {
             state = AlertState.ConflictingState;
-            if (alertTarget)
+        }
+    }
+
+    void UpdateDetect()
+    {
+        if(state == AlertState.NormalState
+            || state == AlertState.WatchState)
+        {
+            vision.detectEnable = false;
+            Transform player = PublicGameObjectManager.instance.Player.transform;
+            Vector3 dir = transform.position - player.position;
+            bool isInFrontOfPlayer = Vector3.Dot(dir, player.forward) > 0;
+            if (dir.magnitude < 20 && isInFrontOfPlayer)
             {
-                messageDetector.SendAlarm(alertTarget);
+                vision.detectEnable = true;
+            }
+            if(dir.magnitude < 15 && !isInFrontOfPlayer)
+            {
+                vision.detectEnable = true;
             }
         }
     }

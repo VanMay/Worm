@@ -13,7 +13,7 @@ public class HUDController : MonoBehaviour {
     private PlayerWeaponController playerWeaponController;
 
 	void Start () {
-        player = Player.instance.gameObject;
+        player = PublicGameObjectManager.instance.Player;
         playerController = player.GetComponent<PlayerController>();
         playerWeaponController = player.GetComponent<PlayerWeaponController>();
 
